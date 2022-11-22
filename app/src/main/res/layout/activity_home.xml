@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#009688"
+    android:background="#ff80ab"
     tools:context=".Home">
 
     <ImageView
@@ -20,8 +20,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="411dp"
-        android:layout_height="518dp"
+        android:layout_width="410dp"
+        android:layout_height="517dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -29,8 +29,8 @@
         tools:ignore="MissingConstraints">
 
         <TableLayout
-            android:layout_width="410dp"
-            android:layout_height="513dp"
+            android:layout_width="403dp"
+            android:layout_height="509dp"
             android:background="@drawable/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,9 +93,9 @@
                         android:id="@+id/btnThongKe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
                         android:text="Thống Kê"
                         android:textColor="@color/black"
-                        android:backgroundTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -131,7 +131,6 @@
                 android:layout_marginTop="20dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/QuanLySanPham"
                     android:layout_width="149dp"
                     android:layout_height="205dp"
                     android:layout_marginLeft="20dp"
@@ -141,9 +140,9 @@
                         android:id="@+id/btnSanPham"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
                         android:text="Quản lý Sản Phẩm"
                         android:textColor="@color/black"
-                        android:backgroundTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -161,7 +160,7 @@
                         tools:layout_editor_absoluteY="0dp" />
 
                     <ImageView
-                        android:id="@+id/qlSanPham"
+                        android:id="@+id/SanPham"
                         android:layout_width="82dp"
                         android:layout_height="103dp"
                         app:layout_constraintBottom_toTopOf="@+id/MauNenSanPham"
@@ -182,9 +181,9 @@
                         android:id="@+id/btnExit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
                         android:text="Exit"
                         android:textColor="@color/black"
-                        android:backgroundTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
