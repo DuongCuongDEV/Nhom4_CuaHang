@@ -7,17 +7,19 @@ public class Uploadinfo {
      String moTa;
      String maSanPham;
      String giaMoi;
+     String loai;
 
     public Uploadinfo() {
     }
 
-    public Uploadinfo(String giaTienCu, String name, String image, String moTa, String maSanPham, String giaMoi) {
+    public Uploadinfo(String giaTienCu, String name, String image, String moTa, String maSanPham, String giaMoi, String loai) {
         this.giaTienCu = giaTienCu;
         Name = name;
         Image = image;
         this.moTa = moTa;
         this.maSanPham = maSanPham;
         this.giaMoi = giaMoi;
+        this.loai = loai;
     }
 
     public String getGiaTienCu() {
@@ -66,5 +68,13 @@ public class Uploadinfo {
 
     public void setGiaMoi(String giaMoi) {
         this.giaMoi = giaMoi;
+    }
+
+    public String getLoai() {
+        return loai;
+    }
+
+    public void setLoai(String loai) {
+        this.loai = loai;
     }
 }

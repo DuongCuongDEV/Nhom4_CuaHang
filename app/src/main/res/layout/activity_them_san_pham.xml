@@ -16,19 +16,19 @@
     <EditText
         android:id="@+id/txtName"
         android:layout_width="302dp"
-        android:hint="Name"
+        android:hint="Tên sản phẩm"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <EditText
         android:id="@+id/txtGiaCu"
         android:layout_width="302dp"
-        android:hint="giảm giá"
+        android:hint="Giảm giá"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <EditText
         android:id="@+id/txtGiaMoi"
         android:layout_width="302dp"
-        android:hint="Giá mới"
+        android:hint="Giá tiền"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <EditText
@@ -40,35 +40,22 @@
     <EditText
         android:id="@+id/txtMaLoai"
         android:layout_width="302dp"
-        android:hint="Loai"
+        android:hint="Loại"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+
         <Button
             android:id="@+id/btnupload"
-            android:layout_width="194dp"
-            android:layout_height="61dp"
-            android:text="Upload"
-            android:layout_weight="2"
-            android:backgroundTint="#03A9F4"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"/>
-        <Button
-            android:id="@+id/show"
-            android:layout_width="194dp"
-            android:layout_height="61dp"
-            android:layout_weight="2"
+            android:layout_width="184dp"
+            android:layout_gravity="center"
 
+            android:layout_height="60dp"
+            android:text="Đăng sản phẩm"
             android:backgroundTint="#03A9F4"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:text="Show" />
-    </LinearLayout>
+            android:layout_marginTop="20dp"
+            />
+
 
 
 </LinearLayout>

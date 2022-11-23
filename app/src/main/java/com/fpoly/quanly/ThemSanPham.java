@@ -25,7 +25,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class ThemSanPham extends AppCompatActivity {
     Button btnupload,btnshow;
-    EditText txtname, txtMoTa, txtGiaCu, txtGiaMoi;
+    EditText txtname, txtMoTa, txtGiaCu, txtGiaMoi, txtLoai;
     ImageButton imageButton;
     FirebaseDatabase mdatabase;
     DatabaseReference databaseReference;
@@ -44,6 +44,7 @@ public class ThemSanPham extends AppCompatActivity {
         txtMoTa = findViewById(R.id.txtMoTa);
         txtGiaCu = findViewById(R.id.txtGiaCu);
         txtGiaMoi = findViewById(R.id.txtGiaMoi);
+        txtLoai = findViewById(R.id.txtMaLoai);
 
 
         btnupload = findViewById(R.id.btnupload);
@@ -83,9 +84,10 @@ public class ThemSanPham extends AppCompatActivity {
                 String moTa = txtMoTa.getText().toString().trim();
                 String giaCu = txtGiaCu.getText().toString().trim();
                 String giaMoi = txtGiaMoi.getText().toString().trim();
+                String loai = txtLoai.getText().toString().trim();
 
-                if (!(name.isEmpty() && imgurl != null && moTa.isEmpty() && giaCu.isEmpty() && giaMoi.isEmpty())) {
-                    dialog.setTitle("Upload.....");
+                if (!(name.isEmpty() && imgurl != null && moTa.isEmpty() && giaCu.isEmpty() && giaMoi.isEmpty() && loai.isEmpty())) {
+                    dialog.setTitle("Đang tải.....");
                     dialog.show();
                     StorageReference reference = mstorage.getReference().child("imagepost").child(imgurl.getLastPathSegment());
                     reference.putFile(imgurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -100,12 +102,14 @@ public class ThemSanPham extends AppCompatActivity {
                                     newpost.child("moTa").setValue(moTa);
                                     newpost.child("khuyenmai").setValue(giaCu);
                                     newpost.child("Gia").setValue(giaMoi);
+                                    newpost.child("loai").setValue(loai);
                                     newpost.child("image").setValue(task.getResult().toString());
                                     dialog.dismiss();
                                 }
                             });
                         }
                     });
+                    startActivity(new Intent(ThemSanPham.this,QuanLySanPham.class));
                 }
             }
         });
