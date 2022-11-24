@@ -48,7 +48,6 @@ public class ThemSanPham extends AppCompatActivity {
 
 
         btnupload = findViewById(R.id.btnupload);
-        btnshow = findViewById(R.id.show);
         mdatabase = FirebaseDatabase.getInstance();
         databaseReference = mdatabase.getReference().child("SanPham");
         mstorage = FirebaseStorage.getInstance();
