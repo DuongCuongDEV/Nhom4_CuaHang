@@ -20,12 +20,33 @@
             android:id="@+id/name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/image"
             android:text="aaaa"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gia"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="aaaa"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_toRightOf="@+id/image"
+            android:textStyle="bold"
+            android:layout_below="@+id/name"
+            />
+        <TextView
+            android:id="@+id/khuyenmai"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="aaaa"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_toRightOf="@+id/image"
+            android:textStyle="bold"
+            android:layout_below="@+id/gia"
             />
 
         <ImageView

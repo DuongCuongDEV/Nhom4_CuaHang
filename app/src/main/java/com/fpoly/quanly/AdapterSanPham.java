@@ -28,21 +28,6 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     private List<Uploadinfo> list;
     private Context context;
 
-    private OnItem mOnItem;
-
-
-    public interface OnItem{
-        void OnItemClickDelete(int position);
-    }
-
-
-    public void setOnItem(OnItem clickItem){
-        mOnItem = clickItem;
-    }
-
-
-
-
     public AdapterSanPham(List<Uploadinfo> list, Context context) {
         this.list = list;
         this.context = context;
@@ -52,25 +37,21 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     @Override
     public Viewhoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.adapter_sanpham, parent, false);
-        return new Viewhoder(v, mOnItem);
+        return new Viewhoder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Viewhoder holder, @SuppressLint("RecyclerView") int position) {
         Uploadinfo uploadinfo = list.get(position);
-        Picasso.get().load(uploadinfo.getImage()).placeholder(R.drawable.ic_launcher_background).fit().centerCrop().into(holder.img);
-        holder.textView.setText("Tên : " + uploadinfo.getName());
-        
-        
-        
+        Picasso.get().load(uploadinfo.getImage()).placeholder(R.drawable.dienthoai).fit().centerCrop().into(holder.img_avata);
+        holder.tv_name.setText(""+uploadinfo.getName());
+        holder.tv_gia.setText(""+uploadinfo.getGia());
+        holder.tv_khuyenmai.setText(""+uploadinfo.getKhuyenmai());
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             int x = position;
-
-
-
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(holder.textView.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(holder.tv_name.getContext());
                 builder.setTitle("Ban muon xoa??");
                 builder.setMessage("Xoa du lieu");
 
@@ -100,7 +81,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(holder.textView.getContext(), "Canceled.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(holder.tv_name.getContext(), "Canceled.", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.show();
@@ -110,21 +91,20 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
 
     @Override
     public int getItemCount() {
-        if (list != null) {
-            return list.size();
-        }
-        return 0;
+        return list.size();
     }
 
     public static class Viewhoder extends RecyclerView.ViewHolder {
-        private ImageView img;
-        private TextView textView;
+        private ImageView img_avata;
+        private TextView tv_name,tv_gia,tv_khuyenmai;
         private ImageView btnDelete;
 
-        public Viewhoder(@NonNull View itemView, OnItem mOnItem) {
+        public Viewhoder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.image);
-            textView = itemView.findViewById(R.id.name);
+            img_avata = itemView.findViewById(R.id.image);
+            tv_name = itemView.findViewById(R.id.name);
+            tv_gia = itemView.findViewById(R.id.gia);
+            tv_khuyenmai = itemView.findViewById(R.id.khuyenmai);
             btnDelete = itemView.findViewById(R.id.delete);
 
 //            btnDelete.setOnClickListener(new View.OnClickListener() {

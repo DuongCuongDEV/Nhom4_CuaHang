@@ -1,49 +1,54 @@
 package com.fpoly.quanly;
-
 public class Uploadinfo {
-    String giaTienCu;
-     String Name;
-     String Image;
-     String moTa;
-     String maSanPham;
-     String giaMoi;
-     String loai;
+    private String name;
+    private String image;
+    private long Gia;
+    private String khuyenmai;
+    private String moTa;
+    private String loai;
 
     public Uploadinfo() {
     }
 
-    public Uploadinfo(String giaTienCu, String name, String image, String moTa, String maSanPham, String giaMoi, String loai) {
-        this.giaTienCu = giaTienCu;
-        Name = name;
-        Image = image;
+    public Uploadinfo(String name, String image, long gia, String khuyenmai, String moTa, String loai) {
+        this.name = name;
+        this.image = image;
+        Gia = gia;
+        this.khuyenmai = khuyenmai;
         this.moTa = moTa;
-        this.maSanPham = maSanPham;
-        this.giaMoi = giaMoi;
         this.loai = loai;
     }
 
-    public String getGiaTienCu() {
-        return giaTienCu;
-    }
-
-    public void setGiaTienCu(String giaTienCu) {
-        this.giaTienCu = giaTienCu;
-    }
-
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getImage() {
-        return Image;
+        return image;
     }
 
     public void setImage(String image) {
-        Image = image;
+        this.image = image;
+    }
+
+    public long getGia() {
+        return Gia;
+    }
+
+    public void setGia(long gia) {
+        Gia = gia;
+    }
+
+    public String getKhuyenmai() {
+        return khuyenmai;
+    }
+
+    public void setKhuyenmai(String khuyenmai) {
+        this.khuyenmai = khuyenmai;
     }
 
     public String getMoTa() {
@@ -52,22 +57,6 @@ public class Uploadinfo {
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
-    }
-
-    public String getMaSanPham() {
-        return maSanPham;
-    }
-
-    public void setMaSanPham(String maSanPham) {
-        this.maSanPham = maSanPham;
-    }
-
-    public String getGiaMoi() {
-        return giaMoi;
-    }
-
-    public void setGiaMoi(String giaMoi) {
-        this.giaMoi = giaMoi;
     }
 
     public String getLoai() {
