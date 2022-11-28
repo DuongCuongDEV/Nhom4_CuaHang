@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -18,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class QuanLySanPham extends AppCompatActivity {
     RecyclerView recyclerView;
     AdapterSanPham adapter;
     List<Uploadinfo> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,35 +50,16 @@ public class QuanLySanPham extends AppCompatActivity {
         adapter = new AdapterSanPham(list, QuanLySanPham.this);
         recyclerView.setAdapter(adapter);
 
-//        adapter.setOnItem(new AdapterSanPham.OnItem() {
-//            @Override
-//            public void OnItemClickDelete(int position) {
-//                list.remove(position);
-//                adapter.notifyItemRemoved(position);
-//            }
-//        });
-
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Uploadinfo uploadinfo = snapshot.getValue(Uploadinfo.class);
-                list.add(uploadinfo);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+             for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                 Log.d("TAG", "Sản Phẩm: " + dataSnapshot.toString());
+                 Uploadinfo uploadinfo = dataSnapshot.getValue(Uploadinfo.class);
+                 Log.d("TAG", "Sản Phẩm: " + uploadinfo.getName());
+                 list.add(uploadinfo);
+                 adapter.notifyDataSetChanged();
+             }
             }
 
             @Override
@@ -83,35 +67,10 @@ public class QuanLySanPham extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(QuanLySanPham.this,ThemSanPham.class);
+                Intent intent = new Intent(QuanLySanPham.this, ThemSanPham.class);
                 startActivity(intent);
             }
         });
