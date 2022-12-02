@@ -1,8 +1,9 @@
 package com.fpoly.quanly;
 public class Uploadinfo {
+    private String oderNo;
     private String name;
     private String image;
-    private long Gia;
+    private int Gia;
     private String khuyenmai;
     private String moTa;
     private String loai;
@@ -10,13 +11,22 @@ public class Uploadinfo {
     public Uploadinfo() {
     }
 
-    public Uploadinfo(String name, String image, long gia, String khuyenmai, String moTa, String loai) {
+    public Uploadinfo(String oderNo, String name, String image, int gia, String khuyenmai, String moTa, String loai) {
+        this.oderNo = oderNo;
         this.name = name;
         this.image = image;
         Gia = gia;
         this.khuyenmai = khuyenmai;
         this.moTa = moTa;
         this.loai = loai;
+    }
+
+    public String getOderNo() {
+        return oderNo;
+    }
+
+    public void setOderNo(String oderNo) {
+        this.oderNo = oderNo;
     }
 
     public String getName() {
@@ -39,7 +49,7 @@ public class Uploadinfo {
         return Gia;
     }
 
-    public void setGia(long gia) {
+    public void setGia(int gia) {
         Gia = gia;
     }
 

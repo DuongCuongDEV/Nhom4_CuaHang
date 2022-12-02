@@ -28,9 +28,13 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     private List<Uploadinfo> list;
     private Context context;
 
+
+
+
     public AdapterSanPham(List<Uploadinfo> list, Context context) {
         this.list = list;
         this.context = context;
+
     }
 
     @NonNull
@@ -44,34 +48,47 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     public void onBindViewHolder(@NonNull Viewhoder holder, @SuppressLint("RecyclerView") int position) {
         Uploadinfo uploadinfo = list.get(position);
         Picasso.get().load(uploadinfo.getImage()).placeholder(R.drawable.dienthoai).fit().centerCrop().into(holder.img_avata);
-        holder.tv_name.setText(""+uploadinfo.getName());
-        holder.tv_gia.setText(""+uploadinfo.getGia());
-        holder.tv_khuyenmai.setText(""+uploadinfo.getKhuyenmai());
+        holder.tv_name.setText(" Tên: "+uploadinfo.getName());
+        holder.tv_gia.setText(" Giá: "+uploadinfo.getGia()+"VND");
+        holder.tv_khuyenmai.setText(" Giảm giá: "+uploadinfo.getKhuyenmai()+"%");
+
+
+
+
+
+
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            int x = position;
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(holder.tv_name.getContext());
                 builder.setTitle("Ban muon xoa??");
                 builder.setMessage("Xoa du lieu");
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("SanPham");
 
+                String oder = reference.getKey();
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        Log.d("TAG", "onClick: " + oder);
+
+
+
+
                         FirebaseDatabase data = FirebaseDatabase.getInstance();
                         DatabaseReference mRef = data.getReference("SanPham");
 
-                        list.remove(position);
-                        notifyDataSetChanged();
 
 
 
-//                        mRef.child().removeValue(new DatabaseReference.CompletionListener() {
-//                            @Override
-//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                                Toast.makeText(context, "Xoa thanh cong", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
+
+
+                        mRef.child(uploadinfo.getName()).removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(context, "Xoa thanh cong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
 

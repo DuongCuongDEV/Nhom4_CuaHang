@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,8 +50,10 @@ public class QuanLySanPham extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<Uploadinfo>();
-        adapter = new AdapterSanPham(list, QuanLySanPham.this);
+        adapter = new AdapterSanPham(list,QuanLySanPham.this);
         recyclerView.setAdapter(adapter);
+
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -76,4 +81,6 @@ public class QuanLySanPham extends AppCompatActivity {
         });
 
     }
+
+
 }
