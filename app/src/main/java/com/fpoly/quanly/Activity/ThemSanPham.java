@@ -1,4 +1,4 @@
-package com.fpoly.quanly;
+package com.fpoly.quanly.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.fpoly.quanly.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -108,7 +109,7 @@ public class ThemSanPham extends AppCompatActivity {
                             newpost.child("loai").setValue(loai);
                         }
                     });
-                    startActivity(new Intent(ThemSanPham.this,QuanLySanPham.class));
+                    startActivity(new Intent(ThemSanPham.this, QuanLySanPham.class));
                 }
             }
         });

@@ -1,23 +1,20 @@
-package com.fpoly.quanly;
+package com.fpoly.quanly.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 
+import com.fpoly.quanly.Adapter.AdapterSanPham;
+import com.fpoly.quanly.R;
+import com.fpoly.quanly.Model.Uploadinfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +58,8 @@ public class QuanLySanPham extends AppCompatActivity {
              for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                  Log.d("TAG", "Sản Phẩm: " + dataSnapshot.toString());
                  Uploadinfo uploadinfo = dataSnapshot.getValue(Uploadinfo.class);
-                 Log.d("TAG", "Sản Phẩm: " + uploadinfo.getName());
+                 uploadinfo.setId(dataSnapshot.getKey());
+                 Log.d("7777777777777", "Sản Phẩm: " + uploadinfo.getId());
                  list.add(uploadinfo);
                  adapter.notifyDataSetChanged();
              }

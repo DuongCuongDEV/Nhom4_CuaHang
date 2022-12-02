@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".Activity.ThongKe">
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/bieuDo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints" />
+    tools:context=".Activity.Loading">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

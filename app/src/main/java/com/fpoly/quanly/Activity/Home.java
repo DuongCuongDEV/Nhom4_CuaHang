@@ -1,16 +1,14 @@
-package com.fpoly.quanly;
+package com.fpoly.quanly.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.fpoly.quanly.R;
 
 public class Home extends AppCompatActivity {
 
@@ -33,7 +31,7 @@ public class Home extends AppCompatActivity {
         btnThongKe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home.this,ThongKe.class);
+                Intent intent = new Intent(Home.this, ThongKe.class);
                 startActivity(intent);
             }
         });
@@ -49,7 +47,7 @@ public class Home extends AppCompatActivity {
         btnSanPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home.this,QuanLySanPham.class);
+                Intent intent = new Intent(Home.this, QuanLySanPham.class);
                 startActivity(intent);
             }
         });
