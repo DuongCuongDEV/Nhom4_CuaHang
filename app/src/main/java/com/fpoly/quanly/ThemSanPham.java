@@ -82,13 +82,14 @@ public class ThemSanPham extends AppCompatActivity {
                 String name = txtname.getText().toString().trim();
                 String moTa = txtMoTa.getText().toString().trim();
                 String giaCu = txtGiaCu.getText().toString().trim();
-                String giaMoi = txtGiaMoi.getText().toString().trim();
+                int giaMoi = Integer.parseInt(txtGiaMoi.getText().toString().trim());
                 String loai = txtLoai.getText().toString().trim();
 
-                if (!(name.isEmpty() && imgurl != null && moTa.isEmpty() && giaCu.isEmpty() && giaMoi.isEmpty() && loai.isEmpty())) {
+                if (!(name.isEmpty() && imgurl != null)) {
                     dialog.setTitle("Đang tải.....");
                     dialog.show();
                     StorageReference reference = mstorage.getReference().child("imagepost").child(imgurl.getLastPathSegment());
+                    DatabaseReference newpost = databaseReference.push();
                     reference.putFile(imgurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -96,16 +97,15 @@ public class ThemSanPham extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     String t = task.getResult().toString();
-                                    DatabaseReference newpost = databaseReference.push();
-                                    newpost.child("name").setValue(name);
-                                    newpost.child("moTa").setValue(moTa);
-                                    newpost.child("khuyenmai").setValue(giaCu);
-                                    newpost.child("Gia").setValue(giaMoi);
-                                    newpost.child("loai").setValue(loai);
                                     newpost.child("image").setValue(task.getResult().toString());
                                     dialog.dismiss();
                                 }
                             });
+                            newpost.child("name").setValue(name);
+                            newpost.child("moTa").setValue(moTa);
+                            newpost.child("khuyenmai").setValue(giaCu);
+                            newpost.child("Gia").setValue(giaMoi);
+                            newpost.child("loai").setValue(loai);
                         }
                     });
                     startActivity(new Intent(ThemSanPham.this,QuanLySanPham.class));
