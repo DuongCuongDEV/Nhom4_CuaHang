@@ -1,4 +1,4 @@
-package com.fpoly.quanly;
+package com.fpoly.quanly.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fpoly.quanly.R;
+import com.fpoly.quanly.Model.Uploadinfo;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -51,12 +52,6 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
         holder.tv_name.setText(" Tên: "+uploadinfo.getName());
         holder.tv_gia.setText(" Giá: "+uploadinfo.getGia()+"VND");
         holder.tv_khuyenmai.setText(" Giảm giá: "+uploadinfo.getKhuyenmai()+"%");
-
-
-
-
-
-
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,37 +59,22 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                 builder.setTitle("Ban muon xoa??");
                 builder.setMessage("Xoa du lieu");
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("SanPham");
-
-                String oder = reference.getKey();
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        Log.d("TAG", "onClick: " + oder);
-
-
-
-
-                        FirebaseDatabase data = FirebaseDatabase.getInstance();
-                        DatabaseReference mRef = data.getReference("SanPham");
-
-
-
-
-
-
-                        mRef.child(uploadinfo.getName()).removeValue(new DatabaseReference.CompletionListener() {
+                        Log.d("TAG", uploadinfo.getId());
+                        reference.child(uploadinfo.getId()).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Toast.makeText(context, "Xoa thanh cong", Toast.LENGTH_SHORT).show();
+                                list.clear();
+                                notifyDataSetChanged();
                             }
                         });
 
                     }
 
                 });
-
-
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

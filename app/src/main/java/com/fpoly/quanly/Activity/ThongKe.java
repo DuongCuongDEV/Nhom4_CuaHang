@@ -1,10 +1,11 @@
-package com.fpoly.quanly;
+package com.fpoly.quanly.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.fpoly.quanly.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;

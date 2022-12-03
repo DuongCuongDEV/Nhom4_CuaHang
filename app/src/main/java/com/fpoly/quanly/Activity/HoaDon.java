@@ -1,8 +1,10 @@
-package com.fpoly.quanly;
+package com.fpoly.quanly.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.fpoly.quanly.R;
 
 public class HoaDon extends AppCompatActivity {
 
