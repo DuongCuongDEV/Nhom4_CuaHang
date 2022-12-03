@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">quanly</string>
+    <string name="app_name" translatable="false">quanly</string>
+    <string name="select">Select</string>
 </resources>

@@ -10,24 +10,33 @@
     <ImageButton
         android:id="@+id/imageview"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="230dp" />
 
 
     <EditText
         android:id="@+id/txtName"
         android:layout_width="302dp"
         android:hint="Tên sản phẩm"
+        android:height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/update_bckg"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <EditText
         android:id="@+id/txtGiaCu"
         android:layout_width="302dp"
         android:hint="Giảm giá"
+        android:height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/update_bckg"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <EditText
         android:id="@+id/txtGiaMoi"
         android:layout_width="302dp"
+        android:height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/update_bckg"
         android:hint="Giá tiền"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
@@ -35,15 +44,34 @@
         android:id="@+id/txtMoTa"
         android:layout_width="302dp"
         android:hint="Mô tả"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-    <EditText
-        android:id="@+id/txtMaLoai"
-        android:layout_width="302dp"
-        android:hint="Loại"
+        android:height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/update_bckg"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="10dp"
+            android:hint="Loại"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/txtLoai"
+        android:layout_width="302dp"
+        android:visibility="gone"
+        android:hint="Tên loại"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
         <Button
             android:id="@+id/btnupload"

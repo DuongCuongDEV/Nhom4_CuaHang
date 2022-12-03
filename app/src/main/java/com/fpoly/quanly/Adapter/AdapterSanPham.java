@@ -8,6 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,12 +23,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.quanly.R;
 import com.fpoly.quanly.Model.Uploadinfo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhoder> {
     private List<Uploadinfo> list;
@@ -42,6 +55,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     @Override
     public Viewhoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.adapter_sanpham, parent, false);
+
         return new Viewhoder(v);
     }
 
@@ -52,6 +66,86 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
         holder.tv_name.setText(" Tên: "+uploadinfo.getName());
         holder.tv_gia.setText(" Giá: "+uploadinfo.getGia()+"VND");
         holder.tv_khuyenmai.setText(" Giảm giá: "+uploadinfo.getKhuyenmai()+"%");
+
+        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.img_avata.getContext())
+                        .setContentHolder(new ViewHolder(R.layout.update_popup))
+                        .setExpanded(true, 1700).create();
+//                dialogPlus.show();
+                View view = dialogPlus.getHolderView();
+
+                String[] items =  {"Điện Thoại","Máy Tính","Tai Nghe"};
+                AutoCompleteTextView autoCompleteTxt;
+                ArrayAdapter<String> adapterItems;
+
+                autoCompleteTxt = view.findViewById(R.id.auto_complete_txt);
+
+                adapterItems = new ArrayAdapter<String>(view.getContext(),R.layout.select_item,items);
+                autoCompleteTxt.setAdapter(adapterItems);
+
+                autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String item = parent.getItemAtPosition(position).toString();
+//                        .setText(item);
+                    }
+                });
+
+
+                EditText ten = view.findViewById(R.id.txtNameUp);
+                EditText giamGia = view.findViewById(R.id.txtGiaCuUp);
+                EditText gia = view.findViewById(R.id.txtGiaMoiUp);
+                EditText moTaUp = view.findViewById(R.id.txtMoTaUp);
+                EditText loaiUp = view.findViewById(R.id.txtLoaiUp);
+
+                Button btnUp = view.findViewById(R.id.btUP);
+
+                ten.setText(uploadinfo.getName());
+                giamGia.setText(uploadinfo.getKhuyenmai());
+                gia.setText(uploadinfo.getGia()+"");
+                moTaUp.setText(uploadinfo.getMoTa());
+                loaiUp.setText(uploadinfo.getLoai());
+
+                dialogPlus.show();
+
+                btnUp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("name", ten.getText().toString());
+                        map.put("khuyenmai", giamGia.getText().toString());
+                        map.put("Gia", Integer.parseInt(gia.getText().toString()));
+                        map.put("moTa", moTaUp.getText().toString());
+                        map.put("loai", loaiUp.getText().toString());
+
+                        FirebaseDatabase.getInstance().getReference().child("SanPham")
+                                .child(uploadinfo.getId()).updateChildren(map)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(holder.tv_name.getContext(), "Thành công", Toast.LENGTH_SHORT).show();
+                                        dialogPlus.dismiss();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(holder.tv_name.getContext(), "Không thành công", Toast.LENGTH_SHORT).show();
+                                        dialogPlus.dismiss();
+                                    }
+                                });
+                    }
+                });
+
+
+            }
+        });
+
+
+
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +156,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("TAG", uploadinfo.getId());
+//                        Log.d("TAG", uploadinfo.getId());
                         reference.child(uploadinfo.getId()).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -71,9 +165,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                                 notifyDataSetChanged();
                             }
                         });
-
                     }
-
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -94,7 +186,8 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     public static class Viewhoder extends RecyclerView.ViewHolder {
         private ImageView img_avata;
         private TextView tv_name,tv_gia,tv_khuyenmai;
-        private ImageView btnDelete;
+        private ImageView btnDelete, btnUpdate;
+
 
         public Viewhoder(@NonNull View itemView) {
             super(itemView);
@@ -103,13 +196,8 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
             tv_gia = itemView.findViewById(R.id.gia);
             tv_khuyenmai = itemView.findViewById(R.id.khuyenmai);
             btnDelete = itemView.findViewById(R.id.delete);
+            btnUpdate = itemView.findViewById(R.id.edit);
 
-//            btnDelete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mOnItem.OnItemClickDelete(getAdapterPosition());
-//                }
-//            });
         }
     }
 }
