@@ -10,9 +10,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.fpoly.quanly.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +30,11 @@ import com.google.firebase.storage.UploadTask;
 
 public class ThemSanPham extends AppCompatActivity {
     Button btnupload,btnshow;
-    EditText txtname, txtMoTa, txtGiaCu, txtGiaMoi, txtLoai;
+    EditText txtname;
+    EditText txtMoTa;
+    EditText txtGiaCu;
+    EditText txtGiaMoi;
+    EditText txtLoai;
     ImageButton imageButton;
     FirebaseDatabase mdatabase;
     DatabaseReference databaseReference;
@@ -34,6 +42,10 @@ public class ThemSanPham extends AppCompatActivity {
     private static final int Gallery_code = 1;
     Uri imgurl = null;
     ProgressDialog dialog;
+
+    String[] items =  {"Điện Thoại","Máy Tính","Tai Nghe"};
+    AutoCompleteTextView autoCompleteTxt;
+    ArrayAdapter<String> adapterItems;
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
@@ -45,7 +57,20 @@ public class ThemSanPham extends AppCompatActivity {
         txtMoTa = findViewById(R.id.txtMoTa);
         txtGiaCu = findViewById(R.id.txtGiaCu);
         txtGiaMoi = findViewById(R.id.txtGiaMoi);
-        txtLoai = findViewById(R.id.txtMaLoai);
+        txtLoai = findViewById(R.id.txtLoai);
+        autoCompleteTxt = findViewById(R.id.auto_complete_txt);
+
+
+        adapterItems = new ArrayAdapter<String>(this,R.layout.select_item,items);
+        autoCompleteTxt.setAdapter(adapterItems);
+
+        autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                txtLoai.setText(item);
+            }
+        });
 
 
         btnupload = findViewById(R.id.btnupload);

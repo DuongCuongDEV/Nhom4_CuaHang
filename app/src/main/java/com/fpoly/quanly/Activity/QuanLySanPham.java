@@ -41,6 +41,7 @@ public class QuanLySanPham extends AppCompatActivity {
         recyclerView = findViewById(R.id.lvSanPham);
         fab = findViewById(R.id.fab);
 
+
         mdatabase = FirebaseDatabase.getInstance();
         databaseReference = mdatabase.getReference().child("SanPham");
         mstorage = FirebaseStorage.getInstance();
@@ -56,10 +57,10 @@ public class QuanLySanPham extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
              for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                 Log.d("TAG", "Sản Phẩm: " + dataSnapshot.toString());
+//                 Log.d("TAG", "Sản Phẩm: " + dataSnapshot.toString());
                  Uploadinfo uploadinfo = dataSnapshot.getValue(Uploadinfo.class);
                  uploadinfo.setId(dataSnapshot.getKey());
-                 Log.d("7777777777777", "Sản Phẩm: " + uploadinfo.getId());
+//                 Log.d("7777777777777", "Sản Phẩm: " + uploadinfo.getId());
                  list.add(uploadinfo);
                  adapter.notifyDataSetChanged();
              }
