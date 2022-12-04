@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff80ab"
+    android:background="#FAF9F8"
     tools:context=".Activity.Home">
 
     <ImageView
@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/anh"
+        app:srcCompat="@drawable/vncstore1"
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,7 @@
         <TableLayout
             android:layout_width="403dp"
             android:layout_height="509dp"
-            android:background="@drawable/white"
+            android:background="#FFC107"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

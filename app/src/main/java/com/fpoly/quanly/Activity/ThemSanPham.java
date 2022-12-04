@@ -43,7 +43,7 @@ public class ThemSanPham extends AppCompatActivity {
     Uri imgurl = null;
     ProgressDialog dialog;
 
-    String[] items =  {"Điện Thoại","Máy Tính","Tai Nghe"};
+    String[] items =  {"Điện Thoại","Laptop","Phụ Kiện","Table","Ốp Lưng"};
     AutoCompleteTextView autoCompleteTxt;
     ArrayAdapter<String> adapterItems;
 
@@ -111,7 +111,7 @@ public class ThemSanPham extends AppCompatActivity {
                 int giaMoi = Integer.parseInt(txtGiaMoi.getText().toString().trim());
                 String loai = txtLoai.getText().toString().trim();
 
-                if (!(name.isEmpty() && imgurl != null)) {
+                if (!(name.isEmpty() && imgurl != null && moTa.isEmpty() && giaMoi == 0 && loai.isEmpty())) {
                     dialog.setTitle("Đang tải.....");
                     dialog.show();
                     StorageReference reference = mstorage.getReference().child("imagepost").child(imgurl.getLastPathSegment());
@@ -135,6 +135,8 @@ public class ThemSanPham extends AppCompatActivity {
                         }
                     });
                     startActivity(new Intent(ThemSanPham.this, QuanLySanPham.class));
+                } else {
+                    Toast.makeText(ThemSanPham.this, "Phải nhập đầy đủ các trường", Toast.LENGTH_SHORT).show();
                 }
             }
         });
