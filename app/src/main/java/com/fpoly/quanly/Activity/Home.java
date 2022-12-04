@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fpoly.quanly.Adapter.HoaDonAdapter;
 import com.fpoly.quanly.Login.SignIn;
 import com.fpoly.quanly.R;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Home extends AppCompatActivity {
 
     TextView btnHoaDon,btnThongKe,btnSanPham,btnExit;
-    ImageView quanLySP, thongKe, exit;
+    ImageView quanLySP, thongKe, exit,hoadon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class Home extends AppCompatActivity {
 
         thongKe = findViewById(R.id.ThongKe);
         quanLySP = findViewById(R.id.SanPham);
+        hoadon=findViewById(R.id.HoaDon);
         exit = findViewById(R.id.Exit);
 
 
@@ -66,6 +68,21 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this,QuanLySanPham.class);
+                startActivity(intent);
+            }
+        });
+        btnHoaDon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, HoaDonActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        hoadon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this,HoaDonActivity.class);
                 startActivity(intent);
             }
         });

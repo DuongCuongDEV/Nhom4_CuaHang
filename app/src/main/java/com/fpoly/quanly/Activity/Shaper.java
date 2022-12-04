@@ -34,7 +34,7 @@ public class Shaper extends AppCompatActivity {
             startActivity(new Intent(Shaper.this, SignIn.class));
         } else {
             // đã login
-            startActivity(new Intent(Shaper.this, SignIn.class));
+            startActivity(new Intent(Shaper.this, Home.class));
         }
         finishAffinity();
     }
