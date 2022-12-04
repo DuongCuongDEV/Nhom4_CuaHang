@@ -63,9 +63,14 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     public void onBindViewHolder(@NonNull Viewhoder holder, @SuppressLint("RecyclerView") int position) {
         Uploadinfo uploadinfo = list.get(position);
         Picasso.get().load(uploadinfo.getImage()).placeholder(R.drawable.dienthoai).fit().centerCrop().into(holder.img_avata);
+
         holder.tv_name.setText(" Tên: "+uploadinfo.getName());
         holder.tv_gia.setText(" Giá: "+uploadinfo.getGia()+"VND");
+
         holder.tv_khuyenmai.setText(" Giảm giá: "+uploadinfo.getKhuyenmai()+"%");
+        if(holder.tv_khuyenmai.equals("")){
+            holder.tv_khuyenmai.setText(" Giảm giá: 0%");
+        }
 
         holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,15 +78,22 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
 
                 final DialogPlus dialogPlus = DialogPlus.newDialog(holder.img_avata.getContext())
                         .setContentHolder(new ViewHolder(R.layout.update_popup))
-                        .setExpanded(true, 1700).create();
+                        .setExpanded(true, 1500).create();
 //                dialogPlus.show();
                 View view = dialogPlus.getHolderView();
 
-                String[] items =  {"Điện Thoại","Máy Tính","Tai Nghe"};
+                String[] items =  {"Điện Thoại","Laptop","Phụ Kiện","Table","Ốp Lưng"};
                 AutoCompleteTextView autoCompleteTxt;
                 ArrayAdapter<String> adapterItems;
 
                 autoCompleteTxt = view.findViewById(R.id.auto_complete_txt);
+                EditText ten = view.findViewById(R.id.txtNameUp);
+                EditText giamGia = view.findViewById(R.id.txtGiaCuUp);
+                EditText gia = view.findViewById(R.id.txtGiaMoiUp);
+                EditText moTaUp = view.findViewById(R.id.txtMoTaUp);
+                EditText loaiUp = view.findViewById(R.id.txtLoaiUp);
+
+                Button btnUp = view.findViewById(R.id.btUP);
 
                 adapterItems = new ArrayAdapter<String>(view.getContext(),R.layout.select_item,items);
                 autoCompleteTxt.setAdapter(adapterItems);
@@ -90,18 +102,12 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String item = parent.getItemAtPosition(position).toString();
-//                        .setText(item);
+                        loaiUp.setText(item);
                     }
                 });
 
 
-                EditText ten = view.findViewById(R.id.txtNameUp);
-                EditText giamGia = view.findViewById(R.id.txtGiaCuUp);
-                EditText gia = view.findViewById(R.id.txtGiaMoiUp);
-                EditText moTaUp = view.findViewById(R.id.txtMoTaUp);
-                EditText loaiUp = view.findViewById(R.id.txtLoaiUp);
 
-                Button btnUp = view.findViewById(R.id.btUP);
 
                 ten.setText(uploadinfo.getName());
                 giamGia.setText(uploadinfo.getKhuyenmai());
@@ -121,22 +127,28 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                         map.put("moTa", moTaUp.getText().toString());
                         map.put("loai", loaiUp.getText().toString());
 
-                        FirebaseDatabase.getInstance().getReference().child("SanPham")
-                                .child(uploadinfo.getId()).updateChildren(map)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(holder.tv_name.getContext(), "Thành công", Toast.LENGTH_SHORT).show();
-                                        dialogPlus.dismiss();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(holder.tv_name.getContext(), "Không thành công", Toast.LENGTH_SHORT).show();
-                                        dialogPlus.dismiss();
-                                    }
-                                });
+                        if (!(ten.equals("") && gia.equals(0) && moTaUp.equals("") && loaiUp.equals(""))) {
+
+
+                            FirebaseDatabase.getInstance().getReference().child("SanPham")
+                                    .child(uploadinfo.getId()).updateChildren(map)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(holder.tv_name.getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                                            dialogPlus.dismiss();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(holder.tv_name.getContext(), "Cập nhật không thành công", Toast.LENGTH_SHORT).show();
+                                            dialogPlus.dismiss();
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(ten.getContext(), "Bị rỗng các mục cần thiết", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -150,27 +162,27 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(holder.tv_name.getContext());
-                builder.setTitle("Ban muon xoa??");
-                builder.setMessage("Xoa du lieu");
+                builder.setTitle("Bạn muốn xoá sản phẩm?");
+                builder.setMessage("Bấm xoá để xoá");
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("SanPham");
-                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Xoá", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 //                        Log.d("TAG", uploadinfo.getId());
                         reference.child(uploadinfo.getId()).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(context, "Xoa thanh cong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Xoá thành công", Toast.LENGTH_SHORT).show();
                                 list.clear();
                                 notifyDataSetChanged();
                             }
                         });
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(holder.tv_name.getContext(), "Canceled.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(holder.tv_name.getContext(), "Đã huỷ xoá.", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.show();

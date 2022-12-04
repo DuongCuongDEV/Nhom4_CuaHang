@@ -76,7 +76,7 @@
         android:id="@+id/txtLoaiUp"
         android:layout_width="302dp"
         android:height="50dp"
-
+        android:visibility="gone"
         android:hint="Tên loại"
         android:layout_marginTop="10dp"
         android:background="@drawable/update_bckg"
@@ -87,7 +87,6 @@
         android:id="@+id/btUP"
         android:layout_width="184dp"
         android:layout_gravity="center"
-
         android:layout_height="60dp"
         android:text="Cập nhật"
         android:backgroundTint="#03A9F4"
