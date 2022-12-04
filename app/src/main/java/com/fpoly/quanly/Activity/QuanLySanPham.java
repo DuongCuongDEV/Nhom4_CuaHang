@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,6 @@ public class QuanLySanPham extends AppCompatActivity {
         list = new ArrayList<Uploadinfo>();
         adapter = new AdapterSanPham(list,QuanLySanPham.this);
         recyclerView.setAdapter(adapter);
-
 
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

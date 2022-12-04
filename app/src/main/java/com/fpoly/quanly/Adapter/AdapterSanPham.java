@@ -34,6 +34,7 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ import java.util.Map;
 public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhoder> {
     private List<Uploadinfo> list;
     private Context context;
+    DecimalFormat formatter = new DecimalFormat("#,###,###");
 
 
 
@@ -61,11 +63,12 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
 
     @Override
     public void onBindViewHolder(@NonNull Viewhoder holder, @SuppressLint("RecyclerView") int position) {
+
         Uploadinfo uploadinfo = list.get(position);
         Picasso.get().load(uploadinfo.getImage()).placeholder(R.drawable.dienthoai).fit().centerCrop().into(holder.img_avata);
 
         holder.tv_name.setText(" Tên: "+uploadinfo.getName());
-        holder.tv_gia.setText(" Giá: "+uploadinfo.getGia()+"VND");
+        holder.tv_gia.setText(" Giá: "+formatter.format(uploadinfo.getGia())+"VND");
 
         holder.tv_khuyenmai.setText(" Giảm giá: "+uploadinfo.getKhuyenmai()+"%");
         if(holder.tv_khuyenmai.equals("")){
@@ -127,7 +130,6 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                         map.put("moTa", moTaUp.getText().toString());
                         map.put("loai", loaiUp.getText().toString());
 
-                        if (!(ten.equals("") && gia.equals(0) && moTaUp.equals("") && loaiUp.equals(""))) {
 
 
                             FirebaseDatabase.getInstance().getReference().child("SanPham")
@@ -146,9 +148,6 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                                             dialogPlus.dismiss();
                                         }
                                     });
-                        } else {
-                            Toast.makeText(ten.getContext(), "Bị rỗng các mục cần thiết", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 });
 
