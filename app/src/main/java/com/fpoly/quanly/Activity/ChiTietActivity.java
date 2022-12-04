@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.fpoly.quanly.R;
 
-public class HoaDon extends AppCompatActivity {
+public class ChiTietActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hoa_don);
+        setContentView(R.layout.activity_chi_tiet);
     }
 }
