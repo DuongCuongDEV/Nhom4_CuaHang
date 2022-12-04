@@ -18,6 +18,8 @@
         android:layout_width="302dp"
         android:hint="Tên sản phẩm"
         android:height="50dp"
+        android:padding="10dp"
+
         android:layout_marginTop="10dp"
         android:background="@drawable/update_bckg"
         android:layout_height="wrap_content"
@@ -26,6 +28,8 @@
         android:id="@+id/txtGiaCu"
         android:layout_width="302dp"
         android:hint="Giảm giá"
+        android:padding="10dp"
+
         android:height="50dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/update_bckg"
@@ -35,6 +39,8 @@
         android:id="@+id/txtGiaMoi"
         android:layout_width="302dp"
         android:height="50dp"
+        android:padding="10dp"
+
         android:layout_marginTop="10dp"
         android:background="@drawable/update_bckg"
         android:hint="Giá tiền"
@@ -44,6 +50,8 @@
         android:id="@+id/txtMoTa"
         android:layout_width="302dp"
         android:hint="Mô tả"
+        android:padding="10dp"
+
         android:height="100dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/update_bckg"
