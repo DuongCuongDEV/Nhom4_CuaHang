@@ -53,11 +53,7 @@ public class HoaDonActivity extends AppCompatActivity {
     }
     private void findOrder(){
         // Kết nối tới data base
-        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-        String email1=user.getEmail();
-        email1=email1.replace(".","_");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Oder/"+email1);
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("OderAdmin");
         // Lấy thông tin order
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,7 +84,7 @@ public class HoaDonActivity extends AppCompatActivity {
         if (oderList.size() > 0){
             for (int i = 0; i<oderList.size(); i++){
                 Oder order = oderList.get(i);
-                myRef.child(order.getOrderNo()).child("detail").addValueEventListener(new ValueEventListener() {
+                myRef.child(order.getOrderNo()).child("detailadmin").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataDetail : snapshot.getChildren()){
