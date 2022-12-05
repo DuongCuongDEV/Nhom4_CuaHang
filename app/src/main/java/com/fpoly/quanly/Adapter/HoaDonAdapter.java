@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fpoly.quanly.Activity.ChiTietActivity;
 import com.fpoly.quanly.Activity.ChitietHoadonActivity;
 import com.fpoly.quanly.Model.Hoadon;
 import com.fpoly.quanly.Model.Oder;
@@ -47,32 +46,32 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
     @Override
     public void onBindViewHolder(@NonNull HoaDonViewHoler holder, int position) {
         Hoadon hoadon = hoaDonList.get(position);
-        Oder oder1=oderList.get(position);
+        Oder oder1 = oderList.get(position);
         if (hoadon == null) {
             return;
         }
         Picasso.get().load(hoadon.getImge()).into(holder.img_anh);
         holder.tv_ten.setText(hoadon.getNamesp());
         holder.tv_soluong.setText(String.valueOf(hoadon.getSoluong()));
-        holder.tv_gia.setText(formatPrice.format(hoadon.getGiasp())+" VND");
+        holder.tv_gia.setText(formatPrice.format(hoadon.getGiasp()) + " VND");
         holder.tv_trangthai.setText(hoadon.getTrangthai());
         holder.tv_ma.setText(hoadon.getIdOder());
         holder.tv_ngay.setText(oder1.getNgaymua());
         holder.itemView.setOnClickListener(view -> {
             for (Oder od : oderList) {
-                if (od.getOrderNo().equals(hoadon.getIdOder())){
-                    oder=od;
+                if (od.getOrderNo().equals(hoadon.getIdOder())) {
+                    oder = od;
                     break;
                 }
             }
-            for (Hoadon hd :hoaDonList){
-                if (hoadon.getIdOder().equals(hd.getIdOder())){
-                    oder.addListHoaDon(hd);
+            for (Hoadon hd : hoaDonList) {
+                if (hoadon.getIdOder().equals(hd.getIdOder())) {
+                   oder.addListHoaDon(hd);
                 }
             }
-            Intent intent=new Intent(view.getContext(), ChitietHoadonActivity.class);
-            intent.putExtra("oder",oder);
-            AppCompatActivity appCompatActivity=(AppCompatActivity) view.getContext();
+            Intent intent = new Intent(view.getContext(), ChitietHoadonActivity.class);
+            intent.putExtra("oder", oder);
+            AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
             view.getContext().startActivity(intent);
         });
         holder.huy.setOnClickListener(v ->{
@@ -85,11 +84,13 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
             String email1 = user.getEmail();
             email1 = email1.replace(".", "_");
             DatabaseReference mreference = mdatabase.getReference("Oder/" + email1);
+            DatabaseReference mreference1 = mdatabase.getReference("OderAdmin");
             HashMap<String,Object> hashMap=new HashMap<>();
             hashMap.put("trangthai","Đã Hủy");
             mreference.child(oder1.getOrderNo()).updateChildren(hashMap);
             mreference.child(oder1.getOrderNo()).child("detail").child(hoadon.getIdHoadon()).updateChildren(hashMap);
-
+            mreference1.child(oder1.getOrderNo()).updateChildren(hashMap);
+            mreference1.child(oder1.getOrderNo()).child("detailadmin").child(hoadon.getIdHoadon()).updateChildren(hashMap);
         });
         if (hoadon.getTrangthai().equals("Đã Hủy")){
             holder.huy.setVisibility(View.GONE);
@@ -101,15 +102,17 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
             hoadon.setTrangthai("Đang vận chuyển");
             oderList.set(position,oder1);
             hoaDonList.set(position,hoadon);
-            FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String email1 = user.getEmail();
             email1 = email1.replace(".", "_");
-            DatabaseReference mreference = mdatabase.getReference("Oder/" + email1);
+            DatabaseReference mreference = FirebaseDatabase.getInstance().getReference("Oder/" + email1);
+            DatabaseReference mreference1 = FirebaseDatabase.getInstance().getReference("OderAdmin");
             HashMap<String,Object> hashMap=new HashMap<>();
             hashMap.put("trangthai","Đang vận chuyển");
             mreference.child(oder1.getOrderNo()).updateChildren(hashMap);
             mreference.child(oder1.getOrderNo()).child("detail").child(hoadon.getIdHoadon()).updateChildren(hashMap);
+            mreference1.child(oder1.getOrderNo()).updateChildren(hashMap);
+            mreference1.child(oder1.getOrderNo()).child("detailadmin").child(hoadon.getIdHoadon()).updateChildren(hashMap);
 
         });
         if (hoadon.getTrangthai().equals("Đang vận chuyển")){
@@ -122,15 +125,17 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
             hoadon.setTrangthai("Đã nhận");
             oderList.set(position,oder1);
             hoaDonList.set(position,hoadon);
-            FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String email1 = user.getEmail();
             email1 = email1.replace(".", "_");
-            DatabaseReference mreference = mdatabase.getReference("Oder/" + email1);
+            DatabaseReference mreference = FirebaseDatabase.getInstance().getReference("Oder/" + email1);
+            DatabaseReference mreference1 = FirebaseDatabase.getInstance().getReference("OderAdmin");
             HashMap<String,Object> hashMap=new HashMap<>();
             hashMap.put("trangthai","Đã nhận");
             mreference.child(oder1.getOrderNo()).updateChildren(hashMap);
             mreference.child(oder1.getOrderNo()).child("detail").child(hoadon.getIdHoadon()).updateChildren(hashMap);
+            mreference1.child(oder1.getOrderNo()).updateChildren(hashMap);
+            mreference1.child(oder1.getOrderNo()).child("detailadmin").child(hoadon.getIdHoadon()).updateChildren(hashMap);
 
         });
         if (hoadon.getTrangthai().equals("Đã nhận")){

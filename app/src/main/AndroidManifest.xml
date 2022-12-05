@@ -22,13 +22,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activity.ChiTietActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Activity.Shaper"
             android:exported="true">
             <intent-filter>

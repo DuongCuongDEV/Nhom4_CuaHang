@@ -1,5 +1,7 @@
 package com.fpoly.quanly.Model;
 
+import com.fpoly.quanly.Model.Hoadon;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Oder implements Serializable {
     private int soluong;
     private int tongtien;
     private List<Hoadon> hoadonList;
+
 
     public Oder(String orderNo, String diachi, String tenkhachhang, String phone, String ngaymua, String trangthai, int soluong, int tongtien, List<Hoadon> hoadonList) {
         this.orderNo = orderNo;
