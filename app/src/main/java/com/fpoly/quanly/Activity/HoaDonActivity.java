@@ -87,6 +87,7 @@ public class HoaDonActivity extends AppCompatActivity {
                 myRef.child(order.getOrderNo()).child("detailadmin").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                         for (DataSnapshot dataDetail : snapshot.getChildren()){
                             Hoadon detailOrder = dataDetail.getValue(Hoadon.class);
                             detailOrder.setIdHoadon(dataDetail.getKey());
