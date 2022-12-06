@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fpoly.quanly.Model.Hoadon;
 import com.fpoly.quanly.Model.Oder;
@@ -26,63 +27,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThongKe extends AppCompatActivity {
-    List<Oder> hoadonList;
-    int soluong=0;
-    int soluong1=0;int soluong3=0;
-    int soluong2=0;
-    ArrayList<PieEntry> entries ;
+    List<Oder> oderList;
+    int soluong = 0;
+    int soluong1 = 0;
+    int soluong3 = 0;
+    int soluong2 = 0;
+    ArrayList<PieEntry> entries;
+    List<Hoadon> hoadonList;
+    PieChart pieChart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_ke);
-        PieChart pieChart = findViewById(R.id.bieuDo);
-        hoadonList=new ArrayList<>();
-        ArrayList<PieEntry> entries=new ArrayList<>();
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("OderAdmin");
+        pieChart = findViewById(R.id.bieuDo);
+        oderList = new ArrayList<>();
+        hoadonList = new ArrayList<>();
+        entries=new ArrayList<>();
+        setDataHistoryProductAdapter();
+
+        pieChart.animate();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("OderAdmin");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                soluong=0;soluong1=0;soluong2=0;soluong3=0;
-                for (DataSnapshot dataSnapshot :snapshot.getChildren()){
-                    Oder oder=dataSnapshot.getValue(Oder.class);
-                    Log.e("2222222",oder.getTrangthai());
-                    if (oder.getTrangthai().equalsIgnoreCase("Đã nhận")){
-                        soluong++;
-                        Log.e("eeeeee",""+soluong);
-                    }
-                    if (oder.getTrangthai().equalsIgnoreCase("Đã hủy")){
-                        soluong1++;
-                        Log.e("eeeeee",""+soluong);
-                    }
-                    if (oder.getTrangthai().equalsIgnoreCase("Đang Chờ Xác Nhận")){
-                        soluong2++;
-                        Log.e("eeeeee",""+soluong);
-                    }
-                    if (oder.getTrangthai().equalsIgnoreCase("Đang vận chuyển")){
-                        soluong3++;
-                    }
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Oder oder = dataSnapshot.getValue(Oder.class);
+                    oderList.add(oder);
+                    oder.setOrderNo(dataSnapshot.getKey());
+                    Log.e("13231", oder.getOrderNo());
                 }
-                entries.add(new PieEntry(soluong,"Đã hủy"));
-                entries.add(new PieEntry(soluong1,"Đã nhận"));
-                entries.add(new PieEntry(soluong2,"Đang Chờ Xác Nhận"));
-                entries.add(new PieEntry(soluong3,"Đang vận chuyển"));
-
-                PieDataSet pieDataSet = new PieDataSet(entries, " ");
-                pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-                pieDataSet.setValueTextColor(Color.BLACK);
-                pieDataSet.setValueTextSize(17f);
-                PieData pieData = new PieData(pieDataSet);
-
-                Legend l = pieChart.getLegend();
-                l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-                l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-                l.setOrientation(Legend.LegendOrientation.VERTICAL);
-                l.setTextSize(18);
-
-                pieChart.setData(pieData);
-                pieChart.getDescription().setEnabled(false);
-                pieChart.setCenterText("Trạng Thái Đơn Hàng");
-                pieChart.animate();
+                findDetailOrder(reference);
             }
 
             @Override
@@ -90,6 +64,74 @@ public class ThongKe extends AppCompatActivity {
 
             }
         });
-
     }
+
+    private void findDetailOrder(DatabaseReference myRef) {
+        soluong=0;soluong1=0;soluong2=0;soluong3=0;
+        hoadonList.clear();
+        if (oderList.size() > 0) {
+            for (int i = 0; i < oderList.size(); i++) {
+                Oder order = oderList.get(i);
+                Log.e("đựoqjodqd",""+oderList.size());
+                myRef.child(order.getOrderNo()).child("detailadmin").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        entries.clear();
+                        for (DataSnapshot dataDetail : snapshot.getChildren()) {
+                            Hoadon detailOrder = dataDetail.getValue(Hoadon.class);
+                            detailOrder.setIdHoadon(dataDetail.getKey());
+                            hoadonList.add(detailOrder);
+                            if (detailOrder.getTrangthai().equalsIgnoreCase("Đã Hủy")){
+                                soluong++;
+                                Log.e("eeeeee",""+soluong);
+                            }
+                            if (detailOrder.getTrangthai().equalsIgnoreCase("Đã nhận")){
+                                soluong1++;
+                                Log.e("eeeeee",""+soluong);
+                            }
+                            if (detailOrder.getTrangthai().equalsIgnoreCase("Đang Chờ Xác Nhận")){
+                                soluong2++;
+                                Log.e("eeeeee",""+soluong);
+                            }
+                            if (detailOrder.getTrangthai().equalsIgnoreCase("Đang vận chuyển")){
+                                soluong3++;
+                            }
+                        }
+                        entries.add(new PieEntry(soluong, "Đã Hủy"));
+                        entries.add(new PieEntry(soluong1, "Đã nhận"));
+                        entries.add(new PieEntry(soluong2, "Đang Chờ Xác Nhận"));
+                        entries.add(new PieEntry(soluong3, "Đang vận chuyển"));
+                        Log.e("sfgshflf",""+entries.size());
+                        // set data HistoryProductAdapter
+                        setDataHistoryProductAdapter();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(ThongKe.this, "Không lấy được chi tiết đơn hàng từ firebase", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    }
+
+    private void setDataHistoryProductAdapter() {
+        PieDataSet pieDataSet = new PieDataSet(entries, " ");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(17f);
+        PieData pieData = new PieData(pieDataSet);
+
+        Legend l = pieChart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setTextSize(18);
+
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterText("Trạng Thái Đơn Hàng");
+    }
+
+
 }

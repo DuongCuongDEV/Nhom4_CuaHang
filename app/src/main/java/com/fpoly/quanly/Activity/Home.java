@@ -37,9 +37,6 @@ public class Home extends AppCompatActivity {
         quanLySP = findViewById(R.id.SanPham);
         hoadon=findViewById(R.id.HoaDon);
         exit = findViewById(R.id.Exit);
-
-
-
         btnThongKe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
