@@ -134,6 +134,8 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
         });
         if (hoadon.getTrangthai().equals("Đã nhận")){
             holder.danhan.setVisibility(View.GONE);
+            holder.dangvanchuyen.setVisibility(View.GONE);
+            holder.huy.setVisibility(View.GONE);
         }else {
             holder.danhan.setVisibility(View.VISIBLE);
         }
