@@ -45,7 +45,6 @@ public class ChitietHoadonActivity extends AppCompatActivity {
         tv_sodt.setText(order.getPhone());
         tv_sosanpham.setText(String.valueOf(order.getSoluong()));
         tv_tongtien.setText(formatPrice.format(order.getTongtien()) + "VNĐ");
-        tv_trangthai.setText(order.getTrangthai());
     }
 
     public void anhxa(){
@@ -58,7 +57,6 @@ public class ChitietHoadonActivity extends AppCompatActivity {
         tv_sodt=findViewById(R.id.tv_sodtct);
         tv_sosanpham=findViewById(R.id.tv_sospct);
         tv_tongtien=findViewById(R.id.tv_tongtienct);
-        tv_trangthai=findViewById(R.id.tv_trangthaichitiet);
         img_back=findViewById(R.id.img_backchitiet);
         img_back.setOnClickListener(v ->{
             super.onBackPressed();
