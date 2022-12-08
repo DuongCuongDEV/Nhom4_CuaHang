@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 
 import com.fpoly.quanly.Adapter.AdapterSanPham;
 import com.fpoly.quanly.R;
-import com.fpoly.quanly.Model.Uploadinfo;
+import com.fpoly.quanly.Model.Sanpham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class QuanLySanPham extends AppCompatActivity {
     FirebaseStorage mstorage;
     RecyclerView recyclerView;
     AdapterSanPham adapter;
-    List<Uploadinfo> list;
+    List<Sanpham> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class QuanLySanPham extends AppCompatActivity {
         mstorage = FirebaseStorage.getInstance();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<Uploadinfo>();
+        list = new ArrayList<Sanpham>();
         adapter = new AdapterSanPham(list,QuanLySanPham.this);
         recyclerView.setAdapter(adapter);
 
@@ -58,7 +56,7 @@ public class QuanLySanPham extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
              for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 //                 Log.d("TAG", "Sản Phẩm: " + dataSnapshot.toString());
-                 Uploadinfo uploadinfo = dataSnapshot.getValue(Uploadinfo.class);
+                 Sanpham uploadinfo = dataSnapshot.getValue(Sanpham.class);
                  uploadinfo.setId(dataSnapshot.getKey());
 //                 Log.d("7777777777777", "Sản Phẩm: " + uploadinfo.getId());
                  list.add(uploadinfo);
