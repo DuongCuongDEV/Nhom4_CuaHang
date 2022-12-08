@@ -34,10 +34,10 @@ public class SignIn extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txtEmail = findViewById(R.id.ed_userName);
         txtpass = findViewById(R.id.ed_pasWord);
-        tv_dk = findViewById(R.id.tv_signUp);
-        tv_dk.setOnClickListener(view -> {
-            startActivity(new Intent(this, SignUp.class));
-        });
+//        tv_dk = findViewById(R.id.tv_signUp);
+//        tv_dk.setOnClickListener(view -> {
+//            startActivity(new Intent(this, SignUp.class));
+//        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
