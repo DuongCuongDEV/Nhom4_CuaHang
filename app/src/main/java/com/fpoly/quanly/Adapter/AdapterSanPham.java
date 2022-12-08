@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.quanly.R;
-import com.fpoly.quanly.Model.Uploadinfo;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.fpoly.quanly.Model.Sanpham;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,14 +37,14 @@ import java.util.List;
 import java.util.Map;
 
 public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhoder> {
-    private List<Uploadinfo> list;
+    private List<Sanpham> list;
     private Context context;
     DecimalFormat formatter = new DecimalFormat("#,###,###");
 
 
 
 
-    public AdapterSanPham(List<Uploadinfo> list, Context context) {
+    public AdapterSanPham(List<Sanpham> list, Context context) {
         this.list = list;
         this.context = context;
 
@@ -64,7 +61,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
     @Override
     public void onBindViewHolder(@NonNull Viewhoder holder, @SuppressLint("RecyclerView") int position) {
 
-        Uploadinfo uploadinfo = list.get(position);
+        Sanpham uploadinfo = list.get(position);
         Picasso.get().load(uploadinfo.getImage()).placeholder(R.drawable.dienthoai).fit().centerCrop().into(holder.img_avata);
 
         holder.tv_name.setText(" Tên: "+uploadinfo.getName());

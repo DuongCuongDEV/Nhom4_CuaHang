@@ -1,5 +1,8 @@
 package com.fpoly.quanly.Model;
-public class Uploadinfo {
+
+import java.io.Serializable;
+
+public class Sanpham implements Serializable {
     private String id;
     private String name;
     private String image;
@@ -7,11 +10,9 @@ public class Uploadinfo {
     private String khuyenmai;
     private String moTa;
     private String loai;
+    private int numProduct = 1;
 
-    public Uploadinfo() {
-    }
-
-    public Uploadinfo(String id, String name, String image, int gia, String khuyenmai, String moTa, String loai) {
+    public Sanpham(String id, String name, String image, int gia, String khuyenmai, String moTa, String loai, int numProduct) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -19,6 +20,10 @@ public class Uploadinfo {
         this.khuyenmai = khuyenmai;
         this.moTa = moTa;
         this.loai = loai;
+        this.numProduct = numProduct;
+    }
+
+    public Sanpham() {
     }
 
     public String getId() {
@@ -45,7 +50,7 @@ public class Uploadinfo {
         this.image = image;
     }
 
-    public long getGia() {
+    public int getGia() {
         return Gia;
     }
 
@@ -75,5 +80,13 @@ public class Uploadinfo {
 
     public void setLoai(String loai) {
         this.loai = loai;
+    }
+
+    public int getNumProduct() {
+        return numProduct;
+    }
+
+    public void setNumProduct(int numProduct) {
+        this.numProduct = numProduct;
     }
 }

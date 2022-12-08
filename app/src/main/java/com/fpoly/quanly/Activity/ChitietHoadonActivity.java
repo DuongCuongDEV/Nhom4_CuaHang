@@ -9,14 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fpoly.quanly.Adapter.ChitietAdapter;
-import com.fpoly.quanly.Model.Oder;
+import com.fpoly.quanly.Model.Order;
 import com.fpoly.quanly.R;
 
 import java.text.DecimalFormat;
 
 public class ChitietHoadonActivity extends AppCompatActivity {
     private DecimalFormat formatPrice = new DecimalFormat("###,###,###");
-    private Oder order;
+    private Order order;
     TextView tv_madon,tv_ngaydat,tv_tenkhach,tv_diachi,tv_sodt,tv_sosanpham,tv_tongtien,tv_trangthai;
     RecyclerView rcv_chitiet;
     ImageView img_back;
@@ -30,8 +30,8 @@ public class ChitietHoadonActivity extends AppCompatActivity {
         getView();
     }
     private void setData() {
-        order= (Oder) getIntent().getSerializableExtra("oder");
-        adapter.SetData(order.getHoadonList());
+        order= (Order) getIntent().getSerializableExtra("order");
+        adapter.SetData(order.getSanphamList());
         LinearLayoutManager manager=new LinearLayoutManager(this);
         rcv_chitiet.setLayoutManager(manager);
         rcv_chitiet.setAdapter(adapter);
@@ -45,6 +45,7 @@ public class ChitietHoadonActivity extends AppCompatActivity {
         tv_sodt.setText(order.getPhone());
         tv_sosanpham.setText(String.valueOf(order.getSoluong()));
         tv_tongtien.setText(formatPrice.format(order.getTongtien()) + "VNĐ");
+        tv_trangthai.setText(order.getTrangthai());
     }
 
     public void anhxa(){
@@ -58,6 +59,7 @@ public class ChitietHoadonActivity extends AppCompatActivity {
         tv_sosanpham=findViewById(R.id.tv_sospct);
         tv_tongtien=findViewById(R.id.tv_tongtienct);
         img_back=findViewById(R.id.img_backchitiet);
+        tv_trangthai=findViewById(R.id.tv_trangthai);
         img_back.setOnClickListener(v ->{
             super.onBackPressed();
             adapter.notifyDataSetChanged();

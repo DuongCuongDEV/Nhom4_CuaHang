@@ -1,33 +1,34 @@
 package com.fpoly.quanly.Model;
 
-import com.fpoly.quanly.Model.Hoadon;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Oder implements Serializable {
+public class Order implements Serializable {
     private String orderNo;
     private String diachi;
     private String tenkhachhang;
     private String phone;
     private String ngaymua;
-    private String trangthai;
     private int soluong;
     private int tongtien;
-    private List<Hoadon> hoadonList;
+    private String trangthai;
+    private String idemail;
+    private List<Sanpham> sanphamList;
 
-
-    public Oder(String orderNo, String diachi, String tenkhachhang, String phone, String ngaymua, String trangthai, int soluong, int tongtien, List<Hoadon> hoadonList) {
+    public Order(String orderNo, String diachi, String tenkhachhang, String phone, String ngaymua, int soluong, int tongtien, String trangthai, String idemail, List<Sanpham> sanphamList) {
         this.orderNo = orderNo;
         this.diachi = diachi;
         this.tenkhachhang = tenkhachhang;
         this.phone = phone;
         this.ngaymua = ngaymua;
-        this.trangthai = trangthai;
         this.soluong = soluong;
         this.tongtien = tongtien;
-        this.hoadonList = hoadonList;
+        this.trangthai = trangthai;
+        this.idemail = idemail;
+        this.sanphamList = sanphamList;
+    }
+
+    public Order() {
     }
 
     public String getOrderNo() {
@@ -54,9 +55,6 @@ public class Oder implements Serializable {
         this.tenkhachhang = tenkhachhang;
     }
 
-    public Oder() {
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -71,14 +69,6 @@ public class Oder implements Serializable {
 
     public void setNgaymua(String ngaymua) {
         this.ngaymua = ngaymua;
-    }
-
-    public String getTrangthai() {
-        return trangthai;
-    }
-
-    public void setTrangthai(String trangthai) {
-        this.trangthai = trangthai;
     }
 
     public int getSoluong() {
@@ -97,18 +87,27 @@ public class Oder implements Serializable {
         this.tongtien = tongtien;
     }
 
-    public List<Hoadon> getHoadonList() {
-        return hoadonList;
+    public String getTrangthai() {
+        return trangthai;
     }
 
-    public void setHoadonList(List<Hoadon> hoadonList) {
-        this.hoadonList = hoadonList;
+    public void setTrangthai(String trangthai) {
+        this.trangthai = trangthai;
     }
 
-    public void addListHoaDon(Hoadon hoadon) {
-        if (this.hoadonList == null) {
-            this.hoadonList = new ArrayList<>();
-        }
-        this.hoadonList.add(hoadon);
+    public String getIdemail() {
+        return idemail;
+    }
+
+    public void setIdemail(String idemail) {
+        this.idemail = idemail;
+    }
+
+    public List<Sanpham> getSanphamList() {
+        return sanphamList;
+    }
+
+    public void setSanphamList(List<Sanpham> sanphamList) {
+        this.sanphamList = sanphamList;
     }
 }
