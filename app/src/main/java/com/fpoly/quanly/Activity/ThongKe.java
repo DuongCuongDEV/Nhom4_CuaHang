@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fpoly.quanly.Model.Order;
@@ -22,8 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ThongKe extends AppCompatActivity {
     List<Order> oderList;
@@ -31,43 +35,60 @@ public class ThongKe extends AppCompatActivity {
     int soluong1 = 0;
     int soluong3 = 0;
     int soluong2 = 0;
+    int tong;
     ArrayList<PieEntry> entries;
     PieChart pieChart;
+    TextView tv_tongtien;
+    DecimalFormat formatter = new DecimalFormat("###,###,###");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_ke);
         pieChart = findViewById(R.id.bieuDo);
         oderList = new ArrayList<>();
-        entries=new ArrayList<>();
+        entries = new ArrayList<>();
+        tv_tongtien = findViewById(R.id.tv_tongtien);
         setDataHistoryProductAdapter();
         pieChart.animate();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Order");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                soluong=0;soluong1=0;soluong2=0;soluong3=0;
+                soluong = 0;
+                soluong1 = 0;
+                soluong2 = 0;
+                soluong3 = 0;
+                tong = 0;
                 entries.clear();
                 for (DataSnapshot dataDetail : snapshot.getChildren()) {
                     Order detailOrder = dataDetail.getValue(Order.class);
                     detailOrder.setOrderNo(dataDetail.getKey());
-                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đã Hủy")){
+                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đã Nhận")) {
+                        HashMap<String,Object> hashMap= (HashMap<String, Object>)dataDetail.getValue();
+                        Object tien =hashMap.get("tongtien");
+                        int tongtien =Integer.parseInt(String.valueOf(tien));
+                        tong+=tongtien;
+                        Log.e("sfgshflf", "" + detailOrder.getTongtien());
+                    }
+                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đã Hủy")) {
                         soluong++;
-                        Log.e("eeeeee",""+soluong);
+                        Log.e("eeeeee", "" + soluong);
                     }
-                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đã nhận")){
+                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đã Nhận")) {
                         soluong1++;
-                        Log.e("eeeeee",""+soluong);
+                        Log.e("eeeeee", "" + soluong);
                     }
-                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đang Chờ Xác Nhận")){
+                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đang Chờ Xác Nhận")) {
                         soluong2++;
-                        Log.e("eeeeee",""+soluong);
+                        Log.e("eeeeee", "" + soluong);
                     }
-                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đang vận chuyển")){
+                    if (detailOrder.getTrangthai().equalsIgnoreCase("Đang vận chuyển")) {
                         soluong3++;
                     }
                 }
-                Log.e("sfgshflf",""+entries.size());
+                tv_tongtien.setText(formatter.format( tong)+" Vnd");
+
                 // set data HistoryProductAdapter
                 setDataHistoryProductAdapter();
             }
@@ -81,7 +102,7 @@ public class ThongKe extends AppCompatActivity {
 
     private void setDataHistoryProductAdapter() {
         entries.add(new PieEntry(soluong, "Đã Hủy"));
-        entries.add(new PieEntry(soluong1, "Đã nhận"));
+        entries.add(new PieEntry(soluong1, "Đã Nhận"));
         entries.add(new PieEntry(soluong2, "Đang Chờ Xác Nhận"));
         entries.add(new PieEntry(soluong3, "Đang vận chuyển"));
 

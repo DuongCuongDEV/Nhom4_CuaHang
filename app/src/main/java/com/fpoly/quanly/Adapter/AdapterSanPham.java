@@ -39,7 +39,7 @@ import java.util.Map;
 public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhoder> {
     private List<Sanpham> list;
     private Context context;
-    DecimalFormat formatter = new DecimalFormat("#,###,###");
+    DecimalFormat formatter = new DecimalFormat("###,###,###");
 
 
 
