@@ -6,20 +6,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fpoly.quanly.Adapter.HoaDonAdapter;
 import com.fpoly.quanly.Model.Order;
 import com.fpoly.quanly.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +37,7 @@ public class HoaDonActivity extends AppCompatActivity {
         findOrder();
     }
     private void setDataHistoryProductAdapter(){
+        rcv.setHasFixedSize(true);
         adapter=new HoaDonAdapter();
         adapter.setData(oderList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
@@ -57,7 +56,7 @@ public class HoaDonActivity extends AppCompatActivity {
                 for (DataSnapshot dataOrder : snapshot.getChildren()){
                     Order order = dataOrder.getValue(Order.class);
                     order.setOrderNo(dataOrder.getKey());
-                    oderList.add(order);
+                    oderList.add(0,order);
                 }
                 setDataHistoryProductAdapter();
             }

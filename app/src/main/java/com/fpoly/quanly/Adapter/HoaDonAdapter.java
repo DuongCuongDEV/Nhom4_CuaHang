@@ -34,6 +34,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
 
     public void setData(List<Order> oderList) {
         this.oderList = oderList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -45,10 +46,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
 
     @Override
     public void onBindViewHolder(@NonNull HoaDonViewHoler holder, int position) {
-        Order oder1 = oderList.get(position);
-        if (oder1 == null) {
-            return;
-        }
+        final Order oder1 = oderList.get(position);
         Picasso.get().load(oder1.getSanphamList().get(0).getImage()).into(holder.img_anh);
         holder.tv_ten.setText(oder1.getSanphamList().get(0).getName());
         holder.tv_soluong.setText(String.valueOf(oder1.getSoluong()));
@@ -56,7 +54,6 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
         holder.tv_trangthai.setText(oder1.getTrangthai());
         holder.tv_ma.setText(oder1.getOrderNo());
         holder.tv_ngay.setText(oder1.getNgaymua());
-
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), ChitietHoadonActivity.class);
             intent.putExtra("order", oder1);
@@ -64,54 +61,59 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
         });
         holder.huy.setOnClickListener(v -> {
             oder1.setTrangthai("Đã Hủy");
-            DatabaseReference mReference=FirebaseDatabase.getInstance().getReference("Order");
-            HashMap<String,Object> hashMap =new HashMap<>();
-            hashMap.put("trangthai","Đã Hủy");
+            DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Order");
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("trangthai", "Đã Hủy");
             mReference.child(oder1.getOrderNo()).updateChildren(hashMap);
         });
         holder.danhan.setOnClickListener(v -> {
             oder1.setTrangthai("Đã Nhận");
-            DatabaseReference mReference=FirebaseDatabase.getInstance().getReference("Order");
-            HashMap<String,Object> hashMap =new HashMap<>();
-            hashMap.put("trangthai","Đã Nhận");
+            DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Order");
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("trangthai", "Đã Nhận");
             mReference.child(oder1.getOrderNo()).updateChildren(hashMap);
         });
         holder.dangvanchuyen.setOnClickListener(v -> {
             oder1.setTrangthai("Đang vận chuyển");
-            DatabaseReference mReference=FirebaseDatabase.getInstance().getReference("Order");
-            HashMap<String,Object> hashMap =new HashMap<>();
-            hashMap.put("trangthai","Đang vận chuyển");
+            DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Order");
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("trangthai", "Đang vận chuyển");
             mReference.child(oder1.getOrderNo()).updateChildren(hashMap);
         });
-        Log.e("666777", "onBindViewHolder: "+oder1.getTrangthai());
-
-        if (oder1.getTrangthai().equalsIgnoreCase("Đã Hủy")) {
+        if (oder1.getTrangthai().equals("Đã Hủy")) {
             holder.huy.setVisibility(View.GONE);
             holder.dangvanchuyen.setVisibility(View.GONE);
             holder.danhan.setVisibility(View.GONE);
         }
-        else if (oder1.getTrangthai().equalsIgnoreCase("Đã Nhận")) {
-            holder.huy.setVisibility(View.GONE);
+        if (oder1.getTrangthai().equals("Đã Nhận")) {
             holder.dangvanchuyen.setVisibility(View.GONE);
             holder.danhan.setVisibility(View.GONE);
+            holder.huy.setVisibility(View.GONE);
         }
-        else if (oder1.getTrangthai().equalsIgnoreCase("Đang vận chuyển")) {
+        if (oder1.getTrangthai().equals("Đang vận chuyển")) {
             holder.dangvanchuyen.setVisibility(View.GONE);
-        }
-        else {
             holder.huy.setVisibility(View.VISIBLE);
+            holder.danhan.setVisibility(View.VISIBLE);
+        }
+        if (oder1.getTrangthai().equals("Đang chờ xác nhận")) {
             holder.dangvanchuyen.setVisibility(View.VISIBLE);
             holder.danhan.setVisibility(View.VISIBLE);
+            holder.huy.setVisibility(View.VISIBLE);
         }
     }
     @Override
     public int getItemCount() {
         return oderList.size();
     }
-    public class HoaDonViewHoler extends RecyclerView.ViewHolder {
-        TextView tv_ma, tv_ten, tv_gia, tv_ngay, tv_soluong, tv_trangthai;
-        Button huy, dangvanchuyen, danhan;
-        ImageView img_anh;
+    public static class HoaDonViewHoler extends RecyclerView.ViewHolder {
+         TextView tv_ma;
+         TextView tv_ten;
+         TextView tv_gia;
+         TextView tv_ngay;
+         TextView tv_soluong;
+         TextView tv_trangthai;
+         Button huy, dangvanchuyen, danhan;
+          ImageView img_anh;
 
         public HoaDonViewHoler(@NonNull View itemView) {
             super(itemView);
