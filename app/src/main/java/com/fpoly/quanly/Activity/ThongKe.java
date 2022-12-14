@@ -87,7 +87,7 @@ public class ThongKe extends AppCompatActivity {
                         soluong3++;
                     }
                 }
-                tv_tongtien.setText(formatter.format( tong)+" Vnd");//
+                tv_tongtien.setText(formatter.format( tong)+ " Vnd");
 
                 // set data HistoryProductAdapter
                 setDataHistoryProductAdapter();

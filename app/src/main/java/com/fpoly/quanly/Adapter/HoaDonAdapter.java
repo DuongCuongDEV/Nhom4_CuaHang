@@ -1,5 +1,6 @@
 package com.fpoly.quanly.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +34,6 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
 
     public void setData(List<Order> oderList) {
         this.oderList = oderList;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -60,7 +60,6 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), ChitietHoadonActivity.class);
             intent.putExtra("order", oder1);
-            AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
             view.getContext().startActivity(intent);
         });
         holder.huy.setOnClickListener(v -> {
@@ -85,23 +84,29 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.HoaDonView
             mReference.child(oder1.getOrderNo()).updateChildren(hashMap);
         });
         Log.e("666777", "onBindViewHolder: "+oder1.getTrangthai());
-        if (oder1.getTrangthai().equals("Đã Hủy")) {
+
+        if (oder1.getTrangthai().equalsIgnoreCase("Đã Hủy")) {
             holder.huy.setVisibility(View.GONE);
             holder.dangvanchuyen.setVisibility(View.GONE);
             holder.danhan.setVisibility(View.GONE);
         }
-        if (oder1.getTrangthai().equals("Đã Nhận")) {
-            holder.danhan.setVisibility(View.GONE);
+        else if (oder1.getTrangthai().equalsIgnoreCase("Đã Nhận")) {
             holder.huy.setVisibility(View.GONE);
             holder.dangvanchuyen.setVisibility(View.GONE);
+            holder.danhan.setVisibility(View.GONE);
         }
-        if (oder1.getTrangthai().equals("Đang vận chuyển")) {
+        else if (oder1.getTrangthai().equalsIgnoreCase("Đang vận chuyển")) {
             holder.dangvanchuyen.setVisibility(View.GONE);
+        }
+        else {
+            holder.huy.setVisibility(View.VISIBLE);
+            holder.dangvanchuyen.setVisibility(View.VISIBLE);
+            holder.danhan.setVisibility(View.VISIBLE);
         }
     }
     @Override
     public int getItemCount() {
-            return oderList.size();
+        return oderList.size();
     }
     public class HoaDonViewHoler extends RecyclerView.ViewHolder {
         TextView tv_ma, tv_ten, tv_gia, tv_ngay, tv_soluong, tv_trangthai;

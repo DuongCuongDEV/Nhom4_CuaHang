@@ -27,7 +27,6 @@ public class HoaDonActivity extends AppCompatActivity {
     RecyclerView rcv;
     private List<Order> oderList;
     HoaDonAdapter adapter;
-    TextView tv_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +36,6 @@ public class HoaDonActivity extends AppCompatActivity {
         findViewById(R.id.back).setOnClickListener(view -> {
             super.onBackPressed();
         });
-
         findOrder();
     }
     private void setDataHistoryProductAdapter(){
@@ -59,7 +57,7 @@ public class HoaDonActivity extends AppCompatActivity {
                 for (DataSnapshot dataOrder : snapshot.getChildren()){
                     Order order = dataOrder.getValue(Order.class);
                     order.setOrderNo(dataOrder.getKey());
-                    oderList.add(0,order);
+                    oderList.add(order);
                 }
                 setDataHistoryProductAdapter();
             }
