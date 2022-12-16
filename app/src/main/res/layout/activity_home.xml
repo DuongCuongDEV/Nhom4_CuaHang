@@ -13,7 +13,8 @@
         android:layout_height="91dp"
         android:gravity="center"
         android:text="VNCStore"
-        android:textColor="@color/white"
+        android:fontFamily="@font/chu"
+        android:textColor="#0B75F6"
         android:textSize="80dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -216,8 +217,6 @@
                         app:srcCompat="@drawable/exit" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
-
         </TableLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
