@@ -7,15 +7,19 @@
     android:background="#FAF9F8"
     tools:context=".Activity.Home">
 
-    <ImageView
-        android:id="@+id/anhNen"
-        android:layout_width="153dp"
-        android:layout_height="126dp"
-        android:layout_marginBottom="68dp"
+    <TextView
+        android:id="@+id/vnc"
+        android:layout_width="404dp"
+        android:layout_height="91dp"
+        android:gravity="center"
+        android:text="VNCStore"
+        android:textColor="@color/white"
+        android:textSize="80dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/vncstore1"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

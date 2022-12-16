@@ -26,8 +26,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
-
-
             <TextView
                 android:id="@+id/back"
                 android:layout_width="40dp"
@@ -44,7 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back"
+                android:text="Quay lại"
                 android:layout_marginTop="15dp"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
