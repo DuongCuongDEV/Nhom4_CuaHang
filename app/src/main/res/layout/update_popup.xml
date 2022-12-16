@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.ThemSanPham">
-
-
 <TextView
+    android:layout_marginTop="19dp"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Cập nhật sản phẩm"
@@ -15,9 +15,7 @@
     android:textSize="25dp"
     android:textColor="@color/white"
     android:background="#00ACFB"
-
     />
-
     <EditText
         android:id="@+id/txtNameUp"
         android:layout_width="302dp"

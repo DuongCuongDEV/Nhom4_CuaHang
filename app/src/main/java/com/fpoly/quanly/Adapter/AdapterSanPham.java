@@ -105,10 +105,6 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                         loaiUp.setText(item);
                     }
                 });
-
-
-
-
                 ten.setText(uploadinfo.getName());
                 giamGia.setText(uploadinfo.getKhuyenmai());
                 gia.setText(uploadinfo.getGia()+"");
@@ -116,7 +112,6 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                 loaiUp.setText(uploadinfo.getLoai());
 
                 dialogPlus.show();
-
                 btnUp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -126,8 +121,6 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.Viewhode
                         map.put("Gia", Integer.parseInt(gia.getText().toString()));
                         map.put("moTa", moTaUp.getText().toString());
                         map.put("loai", loaiUp.getText().toString());
-
-
 
                             FirebaseDatabase.getInstance().getReference().child("SanPham")
                                     .child(uploadinfo.getId()).updateChildren(map)
